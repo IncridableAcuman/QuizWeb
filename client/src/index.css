@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.paddingPracent{
+padding: 30px 10%;
+}
