@@ -3,16 +3,16 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:3306/postgres
-    username: postgres
-    password: 1234
+    url: jdbc:postgresql://${PSQL_HOST}:${PSQL_PORT}/${PSQL_NAME}
+    username: ${PSQL_USERNAME}
+    password: ${PSQL_PASS}
     driver-class-name: org.postgresql.Driver
   
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: abdusharipovizzat03@gmail.com
-    password: zmtp yzzl makp igqv
+    host: ${SMTP_HOST}
+    port: ${SMTP_PORT}
+    username: ${SMTP_USER}
+    password: ${SMTP_PASS}
     properties:
       mail:
         smtp:
