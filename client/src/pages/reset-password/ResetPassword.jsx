@@ -1,7 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/navbar/Navbar'
 import { Lock, Send } from 'lucide-react'
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import axiosAPI from '../../api/axiosAPI';
 const ResetPassword = () => {
+  const navigate=useNavigate();
+  const [password,setPassword]=useState("");
+  const [confirmPassword,setConfirmPassword]=useState("");
+
+  const handleSubmit=async (e)=>{
+    e.preventDefault();
+    try {
+      await axiosAPI.put("/auth/reset-password",{password,confirmPassword});
+      toast.success("Password reseted successfully.Just you should be autentification");
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  }
+    useEffect(()=>{
+        if(localStorage.getItem("accessToken")){
+            navigate("/");
+        }
+    },[navigate]);
   return (
     <>
     <Navbar/>
@@ -11,14 +34,16 @@ const ResetPassword = () => {
           <h3 className='text-3xl text-center font-bold mb-5 tracking-tight bg-clip-text text-transparent
                 bg-gradient-to-r from-indigo-600 via-pink-700 to-red-700'>Reset Password</h3>
                  <p className='mb-3 text-sm text-gray-700'>Enter and repeat new password</p>
-            <form className='space-y-4'>
+            <form className='space-y-4' onSubmit={handleSubmit}>
               <div className="flex items-center gap-3 bg-gray-300 px-5 py-2.5 rounded-full">
                 <Lock/>
-                <input type="password" placeholder='Password' className='w-full bg-transparent outline-none' />
+                <input type="password" placeholder='Password' className='w-full bg-transparent outline-none'
+                value={password} onChange={(e)=>setPassword(e.target.value)} />
               </div>
               <div className="flex items-center gap-3 bg-gray-300 px-5 py-2.5 rounded-full">
                 <Lock/>
-                <input type="password" placeholder='Confirm Password' className='w-full bg-transparent outline-none' />
+                <input type="password" placeholder='Confirm Password' className='w-full bg-transparent outline-none'
+                value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)} />
               </div>
               <button className='flex items-center gap-3 mx-auto mt-5 bg-gradient-to-br
                     from-indigo-600 via-pink-700 to-red-700 text-white w-full px-5 py-2.5 rounded-full cursor-pointer shadow-md hover:shadow-lg transition duration-300'>

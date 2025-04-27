@@ -1,45 +1,52 @@
-import React from 'react'
-import {useNavigate} from 'react-router-dom'
-import QuizCards from '../../components/card/QuizCards'
-import Footer from '../../components/footer/Footer'
-import Contact from '../../components/conact/Contact'
-
+import React, { useEffect } from 'react'
+import { Code, LogIn } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 const Auth = () => {
+  const data=[
+    {name:"HTML",icon:<Code/>,path:"#"},
+    {name:"CSS",icon:<Code/>,path:"#"},
+    {name:"JS",icon:<Code/>,path:"#"},
+  ]
   const navigate=useNavigate();
+  useEffect(()=>{
+    if(localStorage.getItem("accessToken")){
+      navigate("/");
+    }
+  },[navigate]);
   return (
     <>
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-gray-900 to-indigo-900 text-white">
-      <header className='fixed top-0 left-0 w-full flex items-center justify-between p-6 opacity-90 bg-gray-800'>
-        <h1 className='text-3xl font-black cursor-pointer tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400'>
-          Web.<span>Quizz</span>
-        </h1>
-        <button className='bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-600 text-white px-5 py-2 rounded-full
-         cursor-pointer hover:bg-indigo-700 transform hover:scale-105 transition-all duration-300 shadow-md' onClick={()=>navigate("/login")}>Sign In</button>
-      </header>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 py-28 px-[10%]">
-        <img src="./me.jpg" alt="me" className='rounded-3xl' />
-        <div className="flex flex-col items-center justify-center mt-5">
-        <h1 className='text-4xl md:text-5xl font-extrabold
-         tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-700 to-indigo-700 mb-4'>Welcome!</h1>
-         <p className='text-2xl font-semibold text-center'>Learn interesting knowledge with us and <span className=' tracking-tight bg-clip-text text-transparent
-        bg-gradient-to-r bg-blue-700 to-indigo-700 '>achieve results</span> </p>
-        <div className="mt-4 flex items-center gap-5">
-          <button className='bg-gradient-to-br from-blue-800 via-blue-900 to-indigo-800 text-white
-          px-5 py-2 shadow-lg rounded-full cursor-pointer'>Starting Now</button>
-          <button className='border-2 px-5 py-2 rounded-full cursor-pointer hover:bg-white hover:text-blue-900 transition-all duration-300'>Read More</button>
-        </div>
-      </div>
-      </div>
-      {/* cards */}
-      <div className="mt-5">
-        <h2 className='text-3xl font-bold text-center mt-5 mb-5'>Best Practice with us</h2>
-      <QuizCards/>        
-      </div>
-      <div className="">
-        <Contact/>
-      </div>
-      <Footer/>
+    <div className="flex items-center justify-between p-6">
+    <a href="#" className="text-2xl font-bold">
+        Web<span className="text-purple-600">Logo</span>
+      </a>
+      <button className='flex items-center gap-2 border px-3 py-2 rounded-full cursor-pointer hover:bg-gray-100'
+       onClick={()=>navigate("/login")}>Sign In
+        <LogIn className='text-gray-400'/>
+      </button>
     </div>
+    {/* data */}
+   <div className="container mx-auto px-4 sm:px-6 lg:px-12 lg:py-12">
+    <div className="flex flex-col md:flex-row items-center justify-between">
+      <div className="space-y-3 mb-6 md:mb-0 w-full">
+        <h1 className='text-4xl md:text-5xl'>Welcome to the</h1>
+        <h2 className='text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent
+              bg-gradient-to-r from-indigo-700 via-pink-700 to-red-800 text-shadow'>
+              Quizz Frontend!
+            </h2>
+            <p className='text-gray-700'>Pick a subject to get started</p>
+      </div>
+      <div className="flex flex-col space-y-6 w-full max-w-md">
+            {data.map((item, index) => (
+              <div className="space-y-2 w-full bg-white p-4 rounded-xl shadow-lg" key={index} onClick={()=>navigate("/login")}>
+                <div className="flex items-center gap-2 cursor-pointer">
+                  <p className='bg-amber-400 text-white rounded p-2'>{item.icon}</p>
+                  <p className='text-xl font-bold uppercase'>{item.name}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+    </div>
+   </div>
     </>
   )
 }

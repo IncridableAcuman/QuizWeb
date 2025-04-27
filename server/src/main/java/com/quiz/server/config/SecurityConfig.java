@@ -8,12 +8,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Component;
 
-import lombok.AllArgsConstructor;
 
 
 @Component
-@AllArgsConstructor
 public class SecurityConfig {
+    
+
     @Bean // parollarni hash qilish
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -21,8 +21,11 @@ public class SecurityConfig {
     @Bean // api so'rovlarini filter qilish yani ixtiyoriy portdan so'rov yubormaslik uchun
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
             httpSecurity.csrf(csrf->csrf.disable())
-            .authorizeHttpRequests(auth->auth.requestMatchers("/api/auth/**").permitAll().anyRequest().authenticated()
+            .authorizeHttpRequests(auth->auth.requestMatchers("/api/auth/**","/api/quizz/**").permitAll().anyRequest().authenticated()
             )
+            // .oauth2Login(oauth2->oauth2
+            // .defaultSuccessUrl("/api/auth/hello")
+            // )
             .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
             return httpSecurity.build();
 

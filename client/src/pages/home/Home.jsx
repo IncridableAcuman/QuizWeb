@@ -1,58 +1,44 @@
-import React from 'react'
-import MainNavbar from '../../components/navbar/MainNavbar'
-import QuizCards from '../../components/card/QuizCards'
-import { Brain, Info, InfoIcon, TestTube, Type, User } from 'lucide-react'
-import Footer from '../../components/footer/Footer'
+import React, { useContext } from 'react'
+import Navbar from '../../components/navbar/Navbar'
+import { Code } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { ThemeContext } from '../../contexts/ThemeProvider'
+
 const Home = () => {
+  const {theme}=useContext(ThemeContext);
   const data=[
-    {icon:<User size={20}/>,count:1,name:"Users"},
-    {icon:<Brain size={20}/>,count:6,name:"Quizzes"},
-    {icon:<Type size={20}/>,count:5,name:"Categories"},
-    {icon:<Type size={20}/>,count:5,name:"Categories"},
+    {name:"HTML",icon:<Code/>,path:"#"},
+    {name:"CSS",icon:<Code/>,path:"#"},
+    {name:"JS",icon:<Code/>,path:"#"},
   ]
+  const navigate=useNavigate();
   return (
     <>
-    <MainNavbar/>
-    <div className="grid grid-cols-1 lg:grid-cols-2 paddingPracent mt-32 gap-10">
-        <img src="./me.jpg" alt="me" className=' rounded-full' />
-        <div className="pt-12">
-          <h1 className='text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r
-          from-indigo-700 to-pink-700 pb-3'>The results are with us.</h1>
-          <p className='text-gray-400'>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-             Dolorum facere expedita blanditiis, dolor nihil nesciunt veniam temporibus,
-              iste quia rerum aut quas voluptas animi excepturi laboriosam quisquam. Neque 
-              quam sapiente quas suscipit.</p>
-              <div className="flex items-center gap-5 pt-5">
-                <button className='flex items-center gap-3 bg-gray-800 text-white px-5 py-2.5 rounded shadow-lg cursor-pointer'>
-                  Tests
-                  <TestTube/>
-                </button>
-                <button className='flex items-center gap-3 bg-gray-800 text-white px-5 py-2.5 rounded shadow-lg cursor-pointer opacity-50 hover:bg-gray-950 transition'>
-                  About
-                  <InfoIcon/>
-                </button>
-              </div>
-        </div>
-    </div> 
-    <div className="pt-12">
-    <h1 className='text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r
-          from-indigo-700 to-pink-700 pb-3 text-center'>Choose the one that is convenient for you.</h1>
-          <div className="p-4">
-            <QuizCards/>
+    <div className={`fixed top-0 left-0 w-full ${theme==="light"?"bg-gray-900 text-white":"bg-white text-gray-900"} min-h-screen`}>
+    <Navbar/>
+    <div className={`container w-full min-h-screen mx-auto paddingPracent mt-24`}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 lg:py-12">
+        <div className="flex flex-col md:flex-row items-center justify-between">
+          <div className="space-y-4 mb-6">
+            <h1 className='text-4xl md:text-5xl'>Are you ready?</h1>
+            <h2 className='text-5xl font-extrabold tracking-tight bg-clip-text text-transparent
+             bg-gradient-to-r from-indigo-700 via-pink-700 to-red-800'>To start the test.</h2>
           </div>
-    </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-5 paddingPracent">
-      {data.map((item,index)=>(
-        <div className="bg-gradient-to-br from-indigo-700 via-pink-700 to-red-800 text-white rounded-2xl text-center" key={index}>
-          <center>
-          <h2 className='pt-3'>{item.icon}</h2>            
-          </center>
-          <p className='text-3xl font-bold'>{item.count}</p>
-          <p className='text-md pb-3'>{item.name}</p>
+          <div className={`flex flex-col space-y-6 w-full max-w-md `}>
+            {data.map((item, index) => (
+              <div className={`space-y-2 w-full ${theme==="light"?"bg-gray-800 text-white hover:bg-gray-950 transition duration-300":"bg-white text-gray-900 hover:bg-gray-100 transition duration-300"} p-4 rounded-xl shadow-lg`} key={index}>
+                <div className="flex items-center gap-2 cursor-pointer" onClick={()=>navigate("/test")}>
+                  <p className='bg-amber-400 text-white rounded p-2'>{item.icon}</p>
+                  <p className='text-xl font-bold uppercase'>{item.name}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
+      </div>
+    </div>      
     </div>
-    <Footer/>
+
     </>
   )
 }

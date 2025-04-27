@@ -26,6 +26,17 @@ public class UserService {
             throw new RuntimeException("User already exist");
         }
     }
+    // public User findOrCreateOAuthUser(String username, String email) {
+    //     return authRepository.findByEmail(email).orElseGet(() -> {
+    //         User user = new User();
+    //         user.setUsername(username);
+    //         user.setEmail(email);
+    //         user.setPassword(""); // Parol OAuth orqali bo‘lgani uchun shart emas
+    //         user.setRole(Role.student);
+    //         return authRepository.save(user);
+    //     });
+    // }
+    
     public User updatePasswoUser(User user,String password){
         user.setPassword(passwordEncoder.encode(password));
         return authRepository.save(user);

@@ -54,4 +54,8 @@ public class AuthController {
     public ResponseEntity<String> resetPassword(@RequestBody Map<String,String> request){
         return ResponseEntity.ok(authService.resetPassword(request.get("password"), request.get("token")));
     }
+    @GetMapping("/hello")
+    ResponseEntity<String> helloData(){
+        return ResponseEntity.ok("Assalamu aleykum jamoat");
+    }
 }

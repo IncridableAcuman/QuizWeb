@@ -2,6 +2,23 @@ server:
   port: 8080
 
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_ID}
+            client-secret: ${GOOGLE_SECRET}
+            redirect-uri: "http://${PSQL_HOST}:${PORT}/api/auth/google/callback"
+            scope:
+              - email
+              - profile
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://oauth2.googleapis.com/oauth2/v3/userinfo
+
   datasource:
     url: jdbc:postgresql://${PSQL_HOST}:${PSQL_PORT}/${PSQL_NAME}
     username: ${PSQL_USERNAME}
@@ -25,3 +42,6 @@ spring:
       ddl-auto: update
     show-sql: true
 
+jwt:
+  accessTime: ${ACCESS_TIME}
+  refreshTime: ${REFRESH_TIME}

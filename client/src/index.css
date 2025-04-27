@@ -3,3 +3,11 @@
 .paddingPracent{
 padding: 30px 10%;
 }
+
+.spacing{
+letter-spacing: 2px;
+}
+.selected {
+    border: 2px solid purple;
+    background-color: #e6e6fa;
+  }
