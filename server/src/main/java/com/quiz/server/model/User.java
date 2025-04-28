@@ -1,5 +1,7 @@
 package com.quiz.server.model;
 
+import java.io.Serializable;
+
 import com.quiz.server.enums.Role;
 
 import jakarta.persistence.Column;
@@ -21,7 +23,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

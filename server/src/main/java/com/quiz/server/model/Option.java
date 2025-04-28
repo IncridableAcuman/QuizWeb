@@ -1,34 +1,36 @@
 package com.quiz.server.model;
 
 import java.io.Serializable;
-import java.sql.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tokens")
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class Token implements Serializable {
+public class Option implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    @OneToOne
-    private User user;
+    @Column(nullable = false)
+    private String key;//A/B/C/D
 
-    private String refreshToken;
+    @Column(nullable = false)
+    private String text;//matn qismi
 
-    private Date expiryDate;
+    @ManyToOne()
+    @JoinColumn(name = "question_id")
+    private Question question;
 }
