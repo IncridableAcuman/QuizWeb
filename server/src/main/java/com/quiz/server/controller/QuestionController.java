@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.quiz.server.dto.QuestionRequest;
 import com.quiz.server.dto.QuestionResponse;
+import com.quiz.server.enums.Category;
 import com.quiz.server.service.QuestionService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,10 @@ public class QuestionController {
     @GetMapping("/questions/{number}")
     public ResponseEntity<QuestionResponse> getQuestionByNumber(@PathVariable Integer number){
         return ResponseEntity.ok(questionService.getQuestionByNumber(number));
+    }
+
+    @GetMapping("/categories/{category}")
+    public ResponseEntity<QuestionResponse>getQuestionByCategory(@PathVariable Category category){
+        return ResponseEntity.ok(questionService.getQuestionByCategory(category));
     }
 }

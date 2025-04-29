@@ -3,7 +3,6 @@ package com.quiz.server.dto;
 import java.util.List;
 
 import com.quiz.server.enums.Category;
-import com.quiz.server.model.Option;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +14,6 @@ public class QuestionResponse {
     private String title;
     private Integer number;
     private Category category;
-    List<Option> options;
+    List<OptionResponse> options;
     private String currentAnswer;
 }

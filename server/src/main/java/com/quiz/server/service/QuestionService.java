@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.quiz.server.dto.QuestionRequest;
 import com.quiz.server.dto.QuestionResponse;
+import com.quiz.server.enums.Category;
 import com.quiz.server.model.Option;
 import com.quiz.server.model.Question;
 import com.quiz.server.repository.OptionRepository;
@@ -37,38 +38,32 @@ public class QuestionService {
             option.setQuestion(saved);
             return optionRepository.save(option);
         }).toList();
-
+        question.setId(saved.getId());;
         question.setOptions(options);
-        QuestionResponse response=new QuestionResponse();
-        response.setId(saved.getId());
-        response.setTitle(saved.getTitle());
-        response.setNumber(saved.getNumber());
-        response.setCategory(saved.getCategory());
-        response.setOptions(options);
-        response.setCurrentAnswer(saved.getCurrentAnswer());
-        return response;
+        return questionSupportService.returnQuestionResponse(question);
    }
 
    public QuestionResponse getQuestionByNumber(Integer number){
     Question question=questionSupportService.findNumber(number);
-    List<Option> options=question.getOptions().stream().map(opt->{
-        Option dto=new Option();
-        dto.setId(opt.getId());
-        dto.setKey(opt.getKey());
-        dto.setText(opt.getText());
-        return dto;
-    }).toList();
-    QuestionResponse response=new QuestionResponse();
-    response.setId(question.getId());
-    response.setTitle(question.getTitle());
-    response.setNumber(question.getNumber());
-    response.setCategory(question.getCategory());
-    response.setOptions(options);
-    response.setCurrentAnswer(question.getCurrentAnswer());
-    return response;
+    // List<Option> options=question.getOptions().stream().map(opt->{
+    //     Option dto=new Option();
+    //     dto.setId(opt.getId());
+    //     dto.setKey(opt.getKey());
+    //     dto.setText(opt.getText());
+    //     return dto;
+    // }).toList();
+    return questionSupportService.returnQuestionResponse(question);
    }
 
-//    public QuestionResponse findByCategory(String category){
-
-//    }
+   public QuestionResponse getQuestionByCategory(Category category){
+    Question question=questionSupportService.findCategory(category);
+    // List<Option> options=question.getOptions().stream().map(opt->{
+    //     Option dto=new Option();
+    //     dto.setId(opt.getId());
+    //     dto.setKey(opt.getKey());
+    //     dto.setText(opt.getText());
+    //     return dto;
+    // }).toList();
+   return questionSupportService.returnQuestionResponse(question);
+   }
 }
