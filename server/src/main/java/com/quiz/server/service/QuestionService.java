@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.quiz.server.dto.QuestionRequest;
 import com.quiz.server.dto.QuestionResponse;
 import com.quiz.server.enums.Category;
+import com.quiz.server.exception.ResourceNotFoundException;
 import com.quiz.server.model.Option;
 import com.quiz.server.model.Question;
 import com.quiz.server.repository.OptionRepository;
@@ -38,7 +39,7 @@ public class QuestionService {
             option.setQuestion(saved);
             return optionRepository.save(option);
         }).toList();
-        question.setId(saved.getId());;
+        question.setId(saved.getId());
         question.setOptions(options);
         return questionSupportService.returnQuestionResponse(question);
    }
@@ -65,5 +66,34 @@ public class QuestionService {
     //     return dto;
     // }).toList();
    return questionSupportService.returnQuestionResponse(question);
+   }
+   public QuestionResponse findQuestionById(Long id){
+    Question question=questionSupportService.findQuestionById(id);
+    return questionSupportService.returnQuestionResponse(question);
+   }
+
+   public QuestionResponse updateQuestion(Question question,Long id){
+    Question question2=questionSupportService.findQuestionById(id);
+    if(question2==null){
+        throw new ResourceNotFoundException(" Question Not found");
+    }
+    question2.setId(question.getId());
+    question2.setTitle(question.getTitle());
+    question2.setNumber(question.getNumber());
+    question2.setCategory(question.getCategory());
+    question2.setCurrentAnswer(question.getCurrentAnswer());
+
+    Question saved=questionRepository.save(question2);
+
+    List<Option> options=question.getOptions().stream().map(opt->{
+        Option option=new Option();
+        option.setKey(opt.getKey());
+        option.setText(opt.getText());
+        option.setQuestion(saved);
+        return optionRepository.save(option);
+    }).toList();
+    question2.setId(saved.getId());
+    question2.setOptions(options);
+    return questionSupportService.returnQuestionResponse(question2);
    }
 }

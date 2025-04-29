@@ -37,6 +37,10 @@ public class QuestionSupportService {
         }).toList();
     }
 
+    public Question findQuestionById(Long id){
+        return questionRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Question not found by id"));
+    }
+
     public QuestionResponse returnQuestionResponse(Question question){
         List<OptionResponse> options = question.getOptions().stream().map(opt->{
             OptionResponse option=new OptionResponse();
