@@ -1,6 +1,8 @@
 package com.quiz.server.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,5 +23,9 @@ public class QuestionController {
     @PostMapping("/create")
     public ResponseEntity<QuestionResponse> createQuestion(@RequestBody QuestionRequest request){
         return ResponseEntity.ok(questionService.createQuestion(request));
+    }
+    @GetMapping("/questions/{number}")
+    public ResponseEntity<QuestionResponse> getQuestionByNumber(@PathVariable Integer number){
+        return ResponseEntity.ok(questionService.getQuestionByNumber(number));
     }
 }

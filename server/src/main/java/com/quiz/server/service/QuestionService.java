@@ -3,8 +3,8 @@ package com.quiz.server.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-//import com.quiz.server.dto.OptionDTO;
 import com.quiz.server.dto.QuestionRequest;
 import com.quiz.server.dto.QuestionResponse;
 import com.quiz.server.model.Option;
@@ -17,35 +17,58 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class QuestionService {
-   private final QuestionRepository questionRepository;
    private final OptionRepository optionRepository;
+   private final QuestionSupportService questionSupportService;
+   private final QuestionRepository questionRepository;
+
+   @Transactional
    public QuestionResponse createQuestion(QuestionRequest request){
+        Question question=new Question();
+        question.setTitle(request.getTitle());
+        question.setNumber(request.getNumber());
+        question.setCategory(request.getCategory());
+        question.setCurrentAnswer(request.getCurrentAnswer());
+        Question saved=questionRepository.save(question);
 
-    Question question=new Question();
-    question.setTitle(request.getTitle());
-    question.setNumber(request.getNumber());
-    question.setCategory(request.getCategory());
-    question.setCurrentAnswer(request.getCurrentAnswer());
+        List<Option> options=request.getOptions().stream().map(opt->{
+            Option option=new Option();
+            option.setKey(opt.getKey());
+            option.setText(opt.getText());
+            option.setQuestion(saved);
+            return optionRepository.save(option);
+        }).toList();
 
-    Question saved = questionRepository.save(question);
+        question.setOptions(options);
+        QuestionResponse response=new QuestionResponse();
+        response.setId(saved.getId());
+        response.setTitle(saved.getTitle());
+        response.setNumber(saved.getNumber());
+        response.setCategory(saved.getCategory());
+        response.setOptions(options);
+        response.setCurrentAnswer(saved.getCurrentAnswer());
+        return response;
+   }
 
-    List<Option> options=request.getOptions().stream().map(opt->{
-        Option option=new Option();
-        option.setKey(opt.getKey());
-        option.setText(opt.getText());
-        option.setQuestion(saved);
-        return optionRepository.save(option); 
+   public QuestionResponse getQuestionByNumber(Integer number){
+    Question question=questionSupportService.findNumber(number);
+    List<Option> options=question.getOptions().stream().map(opt->{
+        Option dto=new Option();
+        dto.setId(opt.getId());
+        dto.setKey(opt.getKey());
+        dto.setText(opt.getText());
+        return dto;
     }).toList();
-
-    question.setOptions(options);
-
     QuestionResponse response=new QuestionResponse();
-    response.setId(saved.getId());
-    response.setTitle(saved.getTitle());
-    response.setCategory(saved.getCategory());
+    response.setId(question.getId());
+    response.setTitle(question.getTitle());
+    response.setNumber(question.getNumber());
+    response.setCategory(question.getCategory());
     response.setOptions(options);
-    response.setCurrentAnswer(saved.getCurrentAnswer());
-
+    response.setCurrentAnswer(question.getCurrentAnswer());
     return response;
    }
+
+//    public QuestionResponse findByCategory(String category){
+
+//    }
 }
