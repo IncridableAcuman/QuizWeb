@@ -1,6 +1,7 @@
 package com.quiz.server.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,7 +44,13 @@ public class QuestionController {
     }
 
     @PutMapping("/question/update/{id}")
-    public ResponseEntity<QuestionResponse> updateQuestion(@RequestBody Question question,Long id){
+    public ResponseEntity<QuestionResponse> updateQuestion(@RequestBody Question question,@PathVariable Long id){
         return ResponseEntity.ok(questionService.updateQuestion(question, id));
+    }
+
+    @DeleteMapping("/question/delete/{id}")
+    public ResponseEntity<String> deleteQuestion(@PathVariable Long id){
+        questionService.deleteQuestion(id);
+        return ResponseEntity.ok("Question deleted successfully");
     }
 }

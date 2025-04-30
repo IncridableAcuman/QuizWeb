@@ -77,7 +77,6 @@ public class QuestionService {
     if(question2==null){
         throw new ResourceNotFoundException(" Question Not found");
     }
-    question2.setId(question.getId());
     question2.setTitle(question.getTitle());
     question2.setNumber(question.getNumber());
     question2.setCategory(question.getCategory());
@@ -92,8 +91,12 @@ public class QuestionService {
         option.setQuestion(saved);
         return optionRepository.save(option);
     }).toList();
-    question2.setId(saved.getId());
     question2.setOptions(options);
     return questionSupportService.returnQuestionResponse(question2);
+   }
+
+   public void deleteQuestion(Long id){
+    Question question=questionSupportService.findQuestionById(id);
+    questionRepository.delete(question);
    }
 }
