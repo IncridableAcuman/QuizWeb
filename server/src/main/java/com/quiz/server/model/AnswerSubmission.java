@@ -32,5 +32,5 @@ public class AnswerSubmission implements Serializable {
 
     private String selectedOption;// tanlagan variant A/B/C/D
 
-    private boolean isCorrect;// to'g'ri yoki noto'g'ri
+    private Boolean isCorrect;// to'g'ri yoki noto'g'ri
 }

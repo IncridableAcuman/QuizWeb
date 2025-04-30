@@ -9,8 +9,10 @@ import com.quiz.server.dto.QuestionRequest;
 import com.quiz.server.dto.QuestionResponse;
 import com.quiz.server.enums.Category;
 import com.quiz.server.exception.ResourceNotFoundException;
+import com.quiz.server.model.AnswerSubmission;
 import com.quiz.server.model.Option;
 import com.quiz.server.model.Question;
+import com.quiz.server.repository.AnswerSubmissionRepository;
 import com.quiz.server.repository.OptionRepository;
 import com.quiz.server.repository.QuestionRepository;
 
@@ -22,6 +24,7 @@ public class QuestionService {
    private final OptionRepository optionRepository;
    private final QuestionSupportService questionSupportService;
    private final QuestionRepository questionRepository;
+   private final AnswerSubmissionRepository answerSubmissionRepository;
 
    @Transactional
    public QuestionResponse createQuestion(QuestionRequest request){
@@ -98,5 +101,28 @@ public class QuestionService {
    public void deleteQuestion(Long id){
     Question question=questionSupportService.findQuestionById(id);
     questionRepository.delete(question);
+   }
+
+   public List<QuestionResponse> getAllquestions(){
+    List<Question> questions=questionRepository.findAll();
+    return questions.stream().map(questionSupportService::returnQuestionResponse).toList();
+   }
+
+   public void answerSubmit(Long userId,Long questionId,String selectedOption){
+    Question question=questionSupportService.findQuestionById(questionId);
+    boolean isCorrect=question.getCurrentAnswer().equalsIgnoreCase(selectedOption);
+
+    AnswerSubmission submission=new AnswerSubmission();
+    submission.setUserId(userId);
+    submission.setQuestion(question);
+    submission.setSelectedOption(selectedOption);
+    submission.setIsCorrect(isCorrect);
+
+    answerSubmissionRepository.save(submission);
+   }
+
+   public int calculateScore(Long userId){
+    List<AnswerSubmission> submissions=answerSubmissionRepository.findByUserId(userId);
+    return (int) submissions.stream().filter(AnswerSubmission::getIsCorrect).count();
    }
 }

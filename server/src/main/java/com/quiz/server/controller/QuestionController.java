@@ -1,5 +1,7 @@
 package com.quiz.server.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.quiz.server.dto.QuestionRequest;
@@ -52,5 +55,20 @@ public class QuestionController {
     public ResponseEntity<String> deleteQuestion(@PathVariable Long id){
         questionService.deleteQuestion(id);
         return ResponseEntity.ok("Question deleted successfully");
+    }
+    @GetMapping("/questions/all")
+    public ResponseEntity<List<QuestionResponse>> getAllquestions(){
+        return ResponseEntity.ok(questionService.getAllquestions());
+    }
+
+    @PostMapping("/question/submit")
+    public ResponseEntity<String> AnswerSubmit(@RequestParam Long userId,@RequestParam Long questionId,@RequestParam String selectedOption){
+      questionService.answerSubmit(userId, questionId, selectedOption);
+      return ResponseEntity.ok("Answer submitted");
+    }
+
+    @GetMapping("/question/score")
+    public ResponseEntity<Integer> calculateScore(@RequestParam Long userId){
+        return ResponseEntity.ok(questionService.calculateScore(userId));
     }
 }
