@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import Navbar from '../../components/navbar/Navbar'
 import { ThemeContext } from '../../contexts/ThemeProvider'
+import { ArrowLeft } from 'lucide-react'
 
 const Test = () => {
     const data=[
@@ -16,10 +17,10 @@ const Test = () => {
     }
   return (
     <>
-    <div className={`fixed top-0 left-0 w-full ${theme==="light"?"bg-gray-900 text-white":"bg-white text-gray-900"} min-h-screen`}>
+    <div className={`fixed top-0 left-0 w-full min-h-screen ${theme==="light"?"bg-gray-900 text-white":"bg-white text-gray-900"}`}>
       <Navbar/>
-    <div className={`container w-full mx-auto paddingPracent mt-24 `}>
-        <div className="flex flex-col md:flex-row items-center justify-between">
+    <div className={`container w-full min-h-screen mx-auto paddingPracent mt-24 `}>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-5">
             {/* 1 */}
             <div className="w-full max-w-md space-y-4 mb-6">
                 <p className='text-gray-500'>Questions 5 of 10</p>
@@ -43,6 +44,10 @@ const Test = () => {
                 </div>
               </div>
             ))}
+            <p className='flex items-center gap-1 cursor-pointer text-gray-300 hover:text-white'>
+              <ArrowLeft/>
+              Back
+            </p>
             <button className='w-full mx-auto bg-blue-500 text-white p-3 cursor-pointer
              rounded-2xl text-md shadow-lg hover:bg-blue-700 transition duration-300'>Submit Answer</button>
           </div>

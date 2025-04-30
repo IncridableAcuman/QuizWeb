@@ -28,9 +28,10 @@ const Navbar = () => {
            aria-haspopup="tree" aria-expanded={isOpen} />
 
           {isOpen && (
-             <div className={`absolute ${theme==="light"?"bg-gray-100 text-gray-900":"bg-gray-800 text-white"} mt-22 px-4 py-2`} >
+             <div className={`absolute ${theme==="light"?"bg-gray-100 text-gray-900":"bg-gray-800 text-white"} mt-28 px-4 py-2`} >
           <p className=' cursor-pointer '>Izzatbek</p>
           <p className=' cursor-pointer ' onClick={handleLogout}>Logout</p>
+          <p className=' cursor-pointer '>Panel</p>
         </div>
           )} 
       </div>
