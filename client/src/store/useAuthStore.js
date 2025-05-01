@@ -13,6 +13,7 @@ const useAuthStore=create((set)=>({
         try {
             const {data}=await axiosAPI.post("/auth/register",formData);
             localStorage.setItem("accessToken",data.accessToken);
+            localStorage.setItem("userId",data.id);
             set({user:data.user,token:data.accessToken,loading:false});
             toast.success("Successfully");
         } catch (error) {
@@ -25,6 +26,7 @@ const useAuthStore=create((set)=>({
         try {
             const {data}=await axiosAPI.post("/auth/login",formData);
             localStorage.setItem("accessToken",data.accessToken);
+            localStorage.setItem("userId",data.id);
             set({user:data.user,token:data.accessToken,loading:false});
             toast.success("Successfully");
         } catch (error) {

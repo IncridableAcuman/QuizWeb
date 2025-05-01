@@ -8,6 +8,7 @@ import AdminPanel from './pages/admin/AdminPanel'
 import Home from './pages/home/Home'
 import {ToastContainer} from 'react-toastify'
 import Test from './pages/tests/Test'
+import Score from './pages/score/Score'
 const App = () => {
   return (
     <>
@@ -20,6 +21,7 @@ const App = () => {
       <Route path='/forgot-password' element={<ForgotPassword/>} />
       <Route path='/reset-password' element={<ResetPassword/>} />
       <Route path='/test' element={<Test/>} />
+      <Route path='/score' element={<Score/>} />
     </Routes>
     </>
   )
