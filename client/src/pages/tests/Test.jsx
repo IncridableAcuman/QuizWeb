@@ -8,9 +8,9 @@ import { useNavigate } from 'react-router-dom'
 
 const Test = () => {
   const { theme } = useContext(ThemeContext);
-  const [questionData, setQuestionData] = useState([]);
+  const [questionData, setQuestionData] = useState([]);// data
   const [selectedOptions, setSelectedOptions] = useState({});
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);// current index for question answer
   const navigate=useNavigate();
   
   const handleOptionClick = (index) => {
@@ -22,22 +22,22 @@ const Test = () => {
   const handleQuestion = async () => {
     try {
       const { data } = await axiosAPI.get("/quizz/questions/all");
-      setQuestionData(data);
-      localStorage.setItem("totalQuestion",JSON.stringify(data.length));
-      localStorage.setItem("score",JSON.stringify(0));
+      setQuestionData(data);//question data
+      localStorage.setItem("totalQuestion",JSON.stringify(data.length));//all question length
+      localStorage.setItem("score",JSON.stringify(0));//result
     } catch (error) {
       console.log(error);
-      toast.error("Xatolik yuz berdi");
+      toast.error("Something went wrong!");
     }
   }
-  const handleAnswerSubmit = async () => {
+  const handleAnswerSubmit = async () => {//submit answer to backend by true or false
     const selectedIndex = selectedOptions[currentQuestionIndex];
     if (selectedIndex === undefined) {
-      toast.warning("Iltimos, javob variantini tanlang!");
+      toast.warning("Please!,Choose the something answer");
       return;
     }
     try {
-      const userId = localStorage.getItem("userId");
+      const userId = localStorage.getItem("userId");// which is user
       const question = questionData[currentQuestionIndex];
       const selectedOptionKey = question.options[selectedIndex].key;
       let score=JSON.parse(localStorage.getItem("score")) || 0;
