@@ -2,25 +2,17 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/navbar/Navbar'
 import { Mail, Send } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import axiosAPI from '../../api/axiosAPI'
+import useAuthStore from '../../store/useAuthStore'
 
 const ForgotPassword = () => {
     const navigate=useNavigate();
     const [email,setEmail]=useState("");
-
+    const {forgotPassword,loading}=useAuthStore();
     const handleSubmit=async (e)=>{
         e.preventDefault();
-        try {
-            await axiosAPI.post("/auth/forgot-password",{email});
-            toast.success("Link sent to your email");
-        } catch (error) {
-            console.log(error);
-            toast.error("Something went wrong");
-        }
+        await forgotPassword(email);
     }
-
-    useEffect(()=>{
+   useEffect(()=>{
         if(localStorage.getItem("accessToken")){
             navigate("/");
         }
@@ -44,7 +36,7 @@ const ForgotPassword = () => {
                     <button className='flex items-center gap-3 mx-auto mt-5 bg-gradient-to-br
                     from-indigo-600 via-pink-700 to-red-700 text-white w-full px-5 py-2.5 rounded-full cursor-pointer shadow-md hover:shadow-lg transition duration-300'>
                         <Send/>
-                        <p>Forgot Password</p>
+                        <p>{`${loading? "Loading...":"Forgot Password"}`}</p>
                     </button>
                 </form>
             </div>

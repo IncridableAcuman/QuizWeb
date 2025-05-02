@@ -2,23 +2,16 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/navbar/Navbar'
 import { Lock, Send } from 'lucide-react'
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import axiosAPI from '../../api/axiosAPI';
+import useAuthStore from '../../store/useAuthStore';
 const ResetPassword = () => {
   const navigate=useNavigate();
   const [password,setPassword]=useState("");
   const [confirmPassword,setConfirmPassword]=useState("");
-
+  const {resetPassword}=useAuthStore();
   const handleSubmit=async (e)=>{
     e.preventDefault();
-    try {
-      await axiosAPI.put("/auth/reset-password",{password,confirmPassword});
-      toast.success("Password reseted successfully.Just you should be autentification");
-      navigate("/login");
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
-    }
+    await resetPassword(password,confirmPassword);
+    navigate("/login");
   }
     useEffect(()=>{
         if(localStorage.getItem("accessToken")){

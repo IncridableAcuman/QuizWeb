@@ -35,5 +35,27 @@ const useAuthStore=create((set)=>({
         }
     },
     logout:()=>set({user:null,token:null}),
+    forgotPassword: async (email)=>{
+        set({loading:true,error:null})
+        try {
+            await axiosAPI.post("/auth/forgot-password",{email});
+            toast.success("Link sent to your email.");
+            set({loading:false})
+        } catch (error) {
+            set({error:error?.response?.data?.message || "Forgot password error!",loading:false});
+            toast.error("Something went wrong");
+        }
+    },
+    resetPassword:async (password,confirmPassword)=>{
+        set({loading:true,error:null});
+        try {
+            await axiosAPI.put("/auth/reset-password",{password,confirmPassword});
+            toast.success("Password reseted successfully.Just you should be autentification");
+            set({loading:false});
+        } catch (error) {
+            set({error:error?.response?.data?.message || "Forgot password error!",loading:false});
+            toast.error("Something went wrong");
+        }
+    }
 }));
 export default useAuthStore;

@@ -59,7 +59,7 @@ const Test = () => {
 
   useEffect(() => {
     handleQuestion();
-  }, []);
+  }, [currentQuestionIndex]);
 
   const currentQuestion = questionData[currentQuestionIndex];
   const selectedOption = selectedOptions[currentQuestionIndex];
@@ -106,14 +106,14 @@ const Test = () => {
                     className={`flex items-center gap-1 px-4 py-2 rounded-lg text-white transition duration-300
                       ${currentQuestionIndex === 0 ? "bg-gray-400 cursor-not-allowed" : "bg-gray-600 hover:bg-gray-800"}`}
                   >
-                    <ArrowLeft size={18} /> Orqaga
+                    <ArrowLeft size={18} /> Back
                   </button>
 
                   <button
                     onClick={handleAnswerSubmit}
                     className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
                   >
-                    {currentQuestionIndex === questionData.length - 1 ? "Yakunlash" : "Keyingisi"}
+                    {currentQuestionIndex === questionData.length - 1 ? "Finish" : "Next"}
                   </button>
                 </div>
               </div>
