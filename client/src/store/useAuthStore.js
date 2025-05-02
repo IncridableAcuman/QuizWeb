@@ -14,7 +14,7 @@ const useAuthStore=create((set)=>({
             const {data}=await axiosAPI.post("/auth/register",formData);
             localStorage.setItem("accessToken",data.accessToken);
             localStorage.setItem("userId",data.id);
-            set({user:data.user,token:data.accessToken,loading:false});
+            set({user:data,token:data.accessToken,loading:false});
             toast.success("Successfully");
         } catch (error) {
             set({error:error?.response?.data?.message || "Registration error!",loading:false});
@@ -27,7 +27,7 @@ const useAuthStore=create((set)=>({
             const {data}=await axiosAPI.post("/auth/login",formData);
             localStorage.setItem("accessToken",data.accessToken);
             localStorage.setItem("userId",data.id);
-            set({user:data.user,token:data.accessToken,loading:false});
+            set({user:data,token:data.accessToken,loading:false});
             toast.success("Successfully");
         } catch (error) {
             set({error:error?.response?.data?.message || "Registration error!"});

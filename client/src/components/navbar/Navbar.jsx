@@ -54,6 +54,7 @@ const Navbar = () => {
               Logout
             </p>
             <p className="cursor-pointer py-1 hover:text-purple-600" onClick={()=>navigate("/admin")}>Panel</p>
+            <p className="cursor-pointer py-1 hover:text-purple-600" onClick={()=>navigate("/data")}>Data</p>
           </div>
         )}
       </div>

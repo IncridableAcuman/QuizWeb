@@ -9,6 +9,9 @@ import Home from './pages/home/Home'
 import {ToastContainer} from 'react-toastify'
 import Test from './pages/tests/Test'
 import Score from './pages/score/Score'
+import MainLayout from './layout/MainLayout'
+import Result from './pages/admin/Result'
+import Users from './pages/admin/Users'
 const App = () => {
   return (
     <>
@@ -22,6 +25,10 @@ const App = () => {
       <Route path='/reset-password' element={<ResetPassword/>} />
       <Route path='/test' element={<Test/>} />
       <Route path='/score' element={<Score/>} />
+      <Route path='/data' element={<MainLayout/>}>
+      <Route path='/data/result' element={<Result/>} />
+      <Route path='/data/users' element={<Users/>} />
+      </Route>
     </Routes>
     </>
   )

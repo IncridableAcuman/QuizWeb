@@ -1,33 +1,52 @@
-import { Book, BookA, Code2, Contact, FileQuestion, Info, TestTube, UserCircle } from 'lucide-react'
-import React from 'react'
-import {useNavigate} from 'react-router-dom';
+import { useState } from "react"
+import {BookA, Home, Menu, User, Users, X} from 'lucide-react'
 const Sidebar = () => {
-  const navigate=useNavigate();
-  const menuData=[
-    {title:"About",icon:<Info/>,path:"/about"},
-    {title:"Students",icon:<Book/>,path:"/students"},
-    {title:"Teachers",icon:<BookA/>,path:"/teachers"},
-    {title:"Quizz Tests",icon:<TestTube/>,path:"/tests"},
-    {title:"Questions",icon:<FileQuestion/>,path:"/questions"},
-    {title:"Admin",icon:<UserCircle/>,path:"/admin"}
-  ]
+    const [isOpen,setIsOpen] = useState(false);
+
+    const menuItems = [
+        {name:"Home",icon:<Home size={20} />,path:'/'},
+        {name:"Users",icon:<Users size={20} />,path:"/data/users"},
+        {name:"Results",icon:<BookA size={20} />, path:"/data/result"},
+        {name:"Admin",icon:<User size={20} />, path:"/admin"}
+    ]
+
   return (
     <>
-    <div className="w-64 min-h-screen bg-gray-900 text-white p-4">
-      <div className='mt-20 flex items-center justify-between p-4'>
-        <h1 className='text-2xl font-bold tracking-tight bg-clip-text text-transparent
-        bg-gradient-to-r from-indigo-700 via-pink-700 to-red-800'>Menu</h1>
-        <Code2 className=' text-gray-300 cursor-pointer hover:text-white transition'
-        onClick={()=>navigate("/")}/>
-      </div>
-      {menuData.map((item,index)=>(
-        <div className="mt-4" key={index}>
-          <a href={item.path} className='flex items-center gap-3 hover:bg-gray-800 px-4 py-2 hover:text-white transition rounded-lg'>
-            {item.icon}
-            {item.title}
-          </a>
-        </div>
-      ))}
+    <div className="flex">
+        <div className={`fixed top-0 left-0 h-full bg-gray-900 text-white w-64 transform 
+            ${isOpen ? "translate-x-0" : "-translate-x-64"} 
+            transition-transform duration-300 ease-in-out lg:translate-x-0`}>
+                <div className="flex items-center justify-between p-4 border-b border-gray-700">
+                      <h2 className="text-lg font-semibold">Dashboard</h2>                     
+                    {isOpen && (
+                       <button className="lg:hidden text-gray-300 hover:text-white"
+                    onClick={()=>setIsOpen(false)}>
+                        <X size={24} />
+                    </button> 
+                    )}
+                    
+                </div>
+                <nav className="mt-4">
+                    {menuItems.map((item,index)=>(
+                        <a key={index} href={item.path} className="flex items-center gap-3 px-4 py-3 text-gray-300
+                         hover:bg-gray-800 hover:text-white transition rounded-lg">
+                            {item.icon}
+                            {item.name}
+                        </a>
+                    ))}
+                </nav>
+            </div>
+            {/* toggle button */}
+            {!isOpen && (
+              <button
+            className="lg:hidden fixed top-4 left-4 bg-gray-900 text-white p-2 rounded-md shadow-md"
+            onClick={()=>setIsOpen(true)} >
+                <Menu size={24}/>
+            </button>  
+            )}
+            
+            <div className="flex-1 p-6">
+            </div>
     </div>
     </>
   )

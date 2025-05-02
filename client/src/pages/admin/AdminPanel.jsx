@@ -1,16 +1,9 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import {  ArrowBigUp, Brain, ChartArea, Code, CreativeCommons, Package, Type, Users } from 'lucide-react'
 import { toast } from 'react-toastify';
 import axiosAPI from '../../api/axiosAPI';
+import Navbar from '../../components/navbar/Navbar';
 const AdminPanel = () => {
-  const navigate=useNavigate();
-  const data=[
-    {name:"Users",icon:<Users/>,path:"#"},
-    {name:"Results",icon:<ChartArea/>,path:"#"},
-    {name:"Rating",icon:<ArrowBigUp/>,path:"#"},
-    {name:"Create question",icon:<CreativeCommons/>,path:"#"}
-  ] 
   const [formData,setFormData]=useState({
     title:'',
     number:'',
@@ -35,25 +28,8 @@ const AdminPanel = () => {
   }
   return (
     <>
-    <div className="flex">
-      <div className="w-64 h-screen bg-gray-950 text-white opacity-100 border-r-4 border-gray-700">
-        <div className="flex items-center justify-between px-6 py-3 bg-gray-800 mb-5">
-        <h1 className='text-lg font-semibold cursor-pointer' onClick={()=>navigate("/")}>Panel</h1>
-        <Code className='text-gray-200'/>
-        </div>
-        <div className="space-y-3 px-4">
-          {data.map((item,index)=>(
-            <a href={item.path} key={index} className='flex items-center gap-5 hover:bg-gray-800 rounded-md p-3 transition duration-300'>
-              {item.icon}
-              {item.name}
-            </a>
-          ))}
-        </div>
-        <div className="fixed bottom-2 left-3 flex items-center gap-2">
-          <p className='text-gray-400 text-sm uppercase'>Izzatbek</p>
-          <p className=' text-gray-400 text-sm'>UBTUIT 2025 | All right</p>
-        </div>
-      </div>
+    <Navbar/>
+    <div className="flex mt-18">
       <div className="flex flex-col justify-center items-center mx-auto">
         <div className="bg-white shadow-2xl w-full min-w-md p-6 rounded-2xl">
           <h1 className='text-center text-3xl font-bold mb-4'>Create Question</h1>

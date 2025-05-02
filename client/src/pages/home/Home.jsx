@@ -3,13 +3,15 @@ import Navbar from '../../components/navbar/Navbar'
 import { Code } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { ThemeContext } from '../../contexts/ThemeProvider'
+import useQuizzStore from '../../store/quizzStore'
 
 const Home = () => {
   const {theme}=useContext(ThemeContext);
+  const {selectOption}=useQuizzStore();
   const data=[
-    {name:"HTML",icon:<Code/>,path:"#"},
-    {name:"CSS",icon:<Code/>,path:"#"},
-    {name:"JS",icon:<Code/>,path:"#"},
+    {name:"HTML",icon:<Code/>,path:"/test"},
+    {name:"CSS",icon:<Code/>,path:"/test"},
+    {name:"JS",icon:<Code/>,path:"/test"},
   ]
   const navigate=useNavigate();
   return (

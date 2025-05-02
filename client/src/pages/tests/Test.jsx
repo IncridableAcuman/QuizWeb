@@ -12,7 +12,6 @@ const Test = () => {
   const [selectedOptions, setSelectedOptions] = useState({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);// current index for question answer
   const navigate=useNavigate();
-  
   const handleOptionClick = (index) => {
     setSelectedOptions(prev => ({
       ...prev,
@@ -59,7 +58,7 @@ const Test = () => {
 
   useEffect(() => {
     handleQuestion();
-  }, [currentQuestionIndex]);
+  }, []);
 
   const currentQuestion = questionData[currentQuestionIndex];
   const selectedOption = selectedOptions[currentQuestionIndex];
@@ -73,7 +72,7 @@ const Test = () => {
             <div className="flex flex-col md:flex-row items-center justify-between gap-5">
               {/* LEFT: Question Info */}
               <div className="w-full max-w-md space-y-4 lg:mb-6">
-                <p className='text-gray-500'>Savol <span>{currentQuestionIndex + 1}</span> / <span>{questionData.length}</span></p>
+                <p className='text-gray-500'>Question <span>{currentQuestionIndex + 1}</span> / <span>{questionData.length}</span></p>
                 <p className='text-md lg:text-xl font-bold'>{currentQuestion.title}</p>
                 <input type="range" min="0" max={questionData.length - 1} value={currentQuestionIndex} readOnly className='w-full' />
               </div>
